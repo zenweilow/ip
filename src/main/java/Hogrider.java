@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Hogrider {
 
     public static void main(String[] args) {
@@ -5,19 +7,40 @@ public class Hogrider {
     }
 
     public void run() {
+        Scanner scanner = new Scanner(System.in);
+
         showGreeting();
-        showExit();
+
+        while (true) {
+            String input = scanner.nextLine();
+
+            if (input.equals("bye")) {
+                showExit();
+                break;
+            }
+
+            showEcho(input);
+        }
+
+        scanner.close();
     }
 
     private void showGreeting() {
         System.out.println("____________________________________________________________");
-        System.out.println(" Hello! I'm Hogrider");
-        System.out.println(" What can I do for you?");
+        System.out.println(" Welcome my GOAT, Hogrider here!");
+        System.out.println(" u need help ah?");
+        System.out.println("____________________________________________________________");
+    }
+
+    private void showEcho(String input) {
+        System.out.println("____________________________________________________________");
+        System.out.println(" " + input);
         System.out.println("____________________________________________________________");
     }
 
     private void showExit() {
-        System.out.println(" Bye. Hope to see you again soon!");
+        System.out.println("____________________________________________________________");
+        System.out.println(" Bye GOAT!");
         System.out.println("____________________________________________________________");
     }
 }
