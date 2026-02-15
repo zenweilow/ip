@@ -29,26 +29,36 @@ public class Hogrider {
         showGreeting();
 
         while (true) {
-            String input = scanner.nextLine();
-
-            if (input.equals(CMD_BYE)) {
-                showExit();
-                break;
-            }
-            else if (input.equals(CMD_LIST)) {
-                showList();
-            } else if (input.startsWith(CMD_MARK + " ")) {
-                markTask(input);
-            } else if (input.startsWith(CMD_UNMARK + " ")) {
-                unmarkTask(input);
-            } else if (input.startsWith(CMD_TODO + " ")) {
-                addTodo(input);
-            } else if (input.startsWith(CMD_DEADLINE + " ")) {
-                addDeadline(input);
-            } else if (input.startsWith(CMD_EVENT + " ")) {
-                addEvent(input);
-            } else {
-                showUnknownCommand();
+            String input = scanner.nextLine().trim();
+            try {
+                if (input.equals(CMD_BYE)) {
+                    showExit();
+                    break;
+                } else if (input.equals(CMD_LIST)) {
+                    showList();
+                } else if (input.startsWith(CMD_MARK + " ")) {
+                    markTask(input);
+                } else if (input.startsWith(CMD_UNMARK + " ")) {
+                    unmarkTask(input);
+                } else if (input.equals(CMD_TODO)) {
+                    throw new HogriderException("todo cannot be empty leh. Use: todo <description>");
+                } else if (input.startsWith(CMD_TODO + " ")) {
+                    addTodo(input);
+                } else if (input.equals(CMD_DEADLINE)) {
+                    throw new HogriderException("deadline cannot be empty leh. Use: deadline <desc> /by <when>");
+                } else if (input.startsWith(CMD_DEADLINE + " ")) {
+                    addDeadline(input);
+                } else if (input.equals(CMD_EVENT)) {
+                    throw new HogriderException("event cannot be empty leh. Use: event <desc> /from <start> /to <end>");
+                } else if (input.startsWith(CMD_EVENT + " ")) {
+                    addEvent(input);
+                } else if (input.isEmpty()) {
+                    throw new HogriderException("you never type anything leh ");
+                } else {
+                    throw new HogriderException("aiyo i don't understand leh. Try: todo, deadline, event, list, mark, unmark, bye");
+                }
+            } catch (HogriderException e) {
+                showError(e.getMessage());
             }
         }
 
@@ -59,43 +69,60 @@ public class Hogrider {
         System.out.println(LINE);
     }
 
-    private void addTodo(String input) {
+    private void showError(String message) {
+        printLine();
+        System.out.println(" " + message);
+        printLine();
+    }
+
+    private void addTodo(String input) throws HogriderException {
         String description = input.substring(CMD_TODO.length()).trim();
+        if (description.isEmpty()) {
+            throw new HogriderException("todo cannot be empty leh. Use: todo <description>");
+        }
         addTask(new Todo(description));
     }
 
-    private void addDeadline(String input) {
+    private void addDeadline(String input) throws HogriderException {
         String rest = input.substring(CMD_DEADLINE.length()).trim();
         int byIndex = rest.indexOf(DEADLINE_BY);
 
         if (byIndex == -1) {
-            printLine();
-            System.out.println(" format wrong leh. Use: deadline <desc> /by <when>");
-            printLine();
-            return;
+            throw new HogriderException("format wrong leh. Use: deadline <desc> /by <when>");
         }
 
         String description = rest.substring(0, byIndex).trim();
         String by = rest.substring(byIndex + DEADLINE_BY.length()).trim();
 
+        if (description.isEmpty()) {
+            throw new HogriderException("deadline description cannot be empty leh. Use: deadline <desc> /by <when>");
+        }
+        if (by.isEmpty()) {
+            throw new HogriderException("deadline /by cannot be empty leh. Use: deadline <desc> /by <when>");
+        }
+
         addTask(new Deadline(description, by));
     }
 
-    private void addEvent(String input) {
+    private void addEvent(String input) throws HogriderException {
         String rest = input.substring(CMD_EVENT.length()).trim();
         int fromIndex = rest.indexOf(EVENT_FROM);
         int toIndex = rest.indexOf(EVENT_TO);
 
         if (fromIndex == -1 || toIndex == -1 || toIndex < fromIndex) {
-            printLine();
-            System.out.println(" format wrong leh. Use: event <desc> /from <start> /to <end>");
-            printLine();
-            return;
+            throw new HogriderException("format wrong leh. Use: event <desc> /from <start> /to <end>");
         }
 
         String description = rest.substring(0, fromIndex).trim();
         String from = rest.substring(fromIndex + EVENT_FROM.length(), toIndex).trim();
         String to = rest.substring(toIndex + EVENT_TO.length()).trim();
+
+        if (description.isEmpty()) {
+            throw new HogriderException("event description cannot be empty leh. Use: event <desc> /from <start> /to <end>");
+        }
+        if (from.isEmpty() || to.isEmpty()) {
+            throw new HogriderException("event /from and /to cannot be empty leh. Use: event <desc> /from <start> /to <end>");
+        }
 
         addTask(new Event(description, from, to));
     }
@@ -103,11 +130,11 @@ public class Hogrider {
 
 
 
-    private void addTask(Task task) {
+    private void addTask(Task task) throws HogriderException {
         printLine();
 
         if (items.size() >= MAX_ITEMS) {
-            System.out.println(" eh bro cannot add already, max 100 items ");
+            throw new HogriderException("eh bro cannot add already, max 100 items");
         } else {
             items.add(task);
             System.out.println(" Got it. I've added this task:");
@@ -140,11 +167,8 @@ public class Hogrider {
         printLine();
     }
 
-    private void markTask(String input) {
-        Integer index = parseIndex(input, CMD_MARK);
-        if (index == null) {
-            return;
-        }
+    private void markTask(String input) throws HogriderException {
+        int index = parseIndex(input, CMD_MARK);
 
         Task task = items.get(index);
         task.mark();
@@ -155,11 +179,8 @@ public class Hogrider {
         printLine();
     }
 
-    private void unmarkTask(String input) {
-        Integer index = parseIndex(input, CMD_UNMARK);
-        if (index == null) {
-            return;
-        }
+    private void unmarkTask(String input) throws HogriderException {
+        int index = parseIndex(input, CMD_UNMARK);
 
         Task task = items.get(index);
         task.unmark();
@@ -171,40 +192,25 @@ public class Hogrider {
     }
 
 
-    private Integer parseIndex(String input, String commandWord) {
+    private int parseIndex(String input, String commandWord) throws HogriderException {
         String[] parts = input.trim().split("\\s+");
         if (parts.length != 2) {
-            printLine();
-            System.out.println(" format wrong leh. Use: " + commandWord + " <taskNumber>");
-            printLine();
-            return null;
+            throw new HogriderException("format wrong leh. Use: " + commandWord + " <taskNumber>");
         }
 
         int oneBased;
         try {
             oneBased = Integer.parseInt(parts[1]);
         } catch (NumberFormatException e) {
-            printLine();
-            System.out.println(" task number must be a number leh.");
-            printLine();
-            return null;
+            throw new HogriderException("task number must be a number leh.");
         }
 
         int zeroBased = oneBased - 1;
         if (zeroBased < 0 || zeroBased >= items.size()) {
-            printLine();
-            System.out.println(" no such task number leh.");
-            printLine();
-            return null;
+            throw new HogriderException("no such task number leh.");
         }
 
         return zeroBased;
-    }
-
-    private void showUnknownCommand() {
-        printLine();
-        System.out.println(" i only understand: todo, deadline, event, list, mark, unmark, bye");
-        printLine();
     }
 
 
