@@ -15,6 +15,15 @@ public class Task {
         isDone = false;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+
     public String getStatusIcon() {
         return isDone ? "X" : " ";
     }

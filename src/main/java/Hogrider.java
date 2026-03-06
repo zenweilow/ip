@@ -5,6 +5,7 @@ public class Hogrider {
 
     private static final int MAX_ITEMS = 100;
     private final ArrayList<Task> items = new ArrayList<>();
+    private final Storage storage = new Storage();
     private static final String LINE = "____________________________________________________________";
 
     private static final String CMD_BYE = "bye";
@@ -25,6 +26,12 @@ public class Hogrider {
 
     public void run() {
         Scanner scanner = new Scanner(System.in);
+
+        try {
+            items.addAll(storage.load());
+        } catch (HogriderException e) {
+            showError(e.getMessage());
+        }
 
         showGreeting();
 
@@ -137,6 +144,8 @@ public class Hogrider {
             throw new HogriderException("eh bro cannot add already, max 100 items");
         } else {
             items.add(task);
+            storage.save(items);
+
             System.out.println(" Got it. I've added this task:");
             System.out.println("   " + task);
             System.out.println(" Now you have " + items.size() + " tasks in the list.");
@@ -172,6 +181,7 @@ public class Hogrider {
 
         Task task = items.get(index);
         task.mark();
+        storage.save(items);
 
         printLine();
         System.out.println(" Nice! I've marked this task as done:");
@@ -184,7 +194,7 @@ public class Hogrider {
 
         Task task = items.get(index);
         task.unmark();
-
+        storage.save(items);
 
         System.out.println(" OK, I've marked this task as not done yet:");
         System.out.println("   " + task);
