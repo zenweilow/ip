@@ -14,6 +14,7 @@ public class Hogrider {
     private static final String CMD_TODO = "todo";
     private static final String CMD_DEADLINE = "deadline";
     private static final String CMD_EVENT = "event";
+    private static final String CMD_DELETE = "delete";
 
     private static final String DEADLINE_BY = " /by ";
     private static final String EVENT_FROM = " /from ";
@@ -52,6 +53,8 @@ public class Hogrider {
                     throw new HogriderException("event cannot be empty leh. Use: event <desc> /from <start> /to <end>");
                 } else if (input.startsWith(CMD_EVENT + " ")) {
                     addEvent(input);
+                } else if (input.startsWith(CMD_DELETE + " ")) {
+                    deleteTask(input);
                 } else if (input.isEmpty()) {
                     throw new HogriderException("you never type anything leh ");
                 } else {
@@ -189,6 +192,17 @@ public class Hogrider {
         System.out.println(" OK, I've marked this task as not done yet:");
         System.out.println("   " + task);
         System.out.println("____________________________________________________________");
+    }
+
+    private void deleteTask(String input) throws HogriderException {
+        int index = parseIndex(input, CMD_DELETE);
+        Task removedTask = items.remove(index);
+
+        printLine();
+        System.out.println(" Noted. I've removed this task:");
+        System.out.println("   " + removedTask);
+        System.out.println(" Now you have " + items.size() + " tasks in the list.");
+        printLine();
     }
 
 
