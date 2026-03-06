@@ -207,6 +207,7 @@ public class Hogrider {
     private void deleteTask(String input) throws HogriderException {
         int index = parseIndex(input, CMD_DELETE);
         Task removedTask = items.remove(index);
+        storage.save(items);
 
         printLine();
         System.out.println(" Noted. I've removed this task:");
