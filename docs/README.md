@@ -55,9 +55,11 @@ Example:
 `deadline return book /by Sunday`
 
 Expected output:
+```
 Got it. I've added this task:
 [D][ ] return book (by: Sunday)
 Now you have 2 tasks in the list.
+```
 
 ---
 
@@ -74,9 +76,11 @@ Example:
 `event project meeting /from Mon 2pm /to 4pm`
 
 Expected output:
+```
 Got it. I've added this task:
 [E][ ] project meeting (from: Mon 2pm to: 4pm)
 Now you have 3 tasks in the list.
+```
 
 ---
 
@@ -89,10 +93,12 @@ Displays all tasks currently stored in the task list.
 `list`
 
 Example output:
+```
 Here are the tasks in your list:
 1.[T][ ] read book
 2.[D][ ] return book (by: Sunday)
 3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+```
 
 ---
 
@@ -109,8 +115,10 @@ Example:
 `mark 1`
 
 Expected output:
+```
 Nice! I've marked this task as done:
 [T][X] read book
+```
 
 ---
 
@@ -127,8 +135,10 @@ Example:
 `unmark 1`
 
 Expected output:
+```
 OK, I've marked this task as not done yet:
 [T][ ] read book
+```
 
 ---
 
@@ -145,9 +155,11 @@ Example:
 `delete 2`
 
 Expected output:
+```
 Noted. I've removed this task:
 [D][ ] return book (by: Sunday)
 Now you have 2 tasks in the list.
+```
 
 ---
 
@@ -164,9 +176,11 @@ Example:
 `find book`
 
 Expected output:
+```
 Here are the matching tasks in your list:
 1.[T][ ] read book
 2.[D][ ] return book (by: Sunday)
+```
 
 ---
 
@@ -179,7 +193,9 @@ Closes the chatbot.
 `bye`
 
 Expected output:
+```
 Bye GOAT!
+```
 
 ---
 
