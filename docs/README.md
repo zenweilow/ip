@@ -39,7 +39,7 @@ Example:
 Expected output: 
 ```
 Got it. I've added this task: 
-[T][ ] read book
+    [T][ ] read book
 Now you have 1 tasks in the list.
 ```
 
@@ -60,7 +60,7 @@ Example:
 Expected output:
 ```
 Got it. I've added this task:
-[D][ ] return book (by: Sunday)
+    [D][ ] return book (by: Sunday)
 Now you have 2 tasks in the list.
 ```
 
@@ -81,7 +81,7 @@ Example:
 Expected output:
 ```
 Got it. I've added this task:
-[E][ ] project meeting (from: Mon 2pm to: 4pm)
+    [E][ ] project meeting (from: Mon 2pm to: 4pm)
 Now you have 3 tasks in the list.
 ```
 
@@ -120,7 +120,7 @@ Example:
 Expected output:
 ```
 Nice! I've marked this task as done:
-[T][X] read book
+    [T][X] read book
 ```
 
 ---
@@ -140,7 +140,7 @@ Example:
 Expected output:
 ```
 OK, I've marked this task as not done yet:
-[T][ ] read book
+    [T][ ] read book
 ```
 
 ---
@@ -155,13 +155,13 @@ Removes a task from the task list.
 
 Example:
 
-`delete 2`
+`delete 3`
 
 Expected output:
 ```
-Noted. I've removed this task:
-[D][ ] return book (by: Sunday)
-Now you have 2 tasks in the list.
+ Noted. I've removed this task:
+   [E][ ] project meeting (from: Mon 2pm to: 4pm)
+ Now you have 2 tasks in the list.
 ```
 
 ---
