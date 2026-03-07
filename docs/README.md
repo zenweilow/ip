@@ -35,9 +35,9 @@ Example:
 
 Expected output: 
 
-Got it. I've added this task:
-[T][ ] read book
-Now you have 1 tasks in the list.
+Got it. I've added this task:\  
+[T][ ] read book\  
+Now you have 1 tasks in the list.\
 
 ---
 
