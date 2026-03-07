@@ -130,7 +130,6 @@ public class Hogrider {
         }
     }
 
-
     private void addTodo(String input) throws HogriderException {
         String description = parser.parseTodo(input);
         Task task = new Todo(description);

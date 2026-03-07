@@ -31,7 +31,6 @@ public class Task {
         return isDone;
     }
 
-
     public String getStatusIcon() {
         return isDone ? "X" : " ";
     }
