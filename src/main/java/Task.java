@@ -1,7 +1,15 @@
+/**
+ * Represents a generic task with a description and completion status.
+ */
 public class Task {
     protected final String description;
     protected boolean isDone;
 
+    /**
+     * Creates a task with the specified description.
+     *
+     * @param description Description of the task.
+     */
     public Task(String description) {
         this.description = description;
         this.isDone = false;

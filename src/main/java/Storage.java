@@ -5,14 +5,29 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles loading tasks from the file system and saving
+ * tasks to persistent storage.
+ */
 public class Storage {
     private static final String SEPARATOR = " \\| ";
     private final Path filePath;
 
+    /**
+     * Creates a storage handler using the specified file path.
+     *
+     * @param filePath Path to the file used for storing tasks.
+     */
     public Storage(String filePath) {
         this.filePath = Paths.get(filePath);
     }
 
+    /**
+     * Loads tasks from the storage file.
+     *
+     * @return List of tasks loaded from the file.
+     * @throws HogriderException If the file cannot be read or parsed.
+     */
     public ArrayList<Task> load() throws HogriderException {
         createFileIfMissing();
 
@@ -32,6 +47,12 @@ public class Storage {
         return loadedTasks;
     }
 
+    /**
+     * Saves the current task list to the storage file.
+     *
+     * @param items List of tasks to be saved.
+     * @throws HogriderException If the tasks cannot be written to file.
+     */
     public void save(ArrayList<Task> items) throws HogriderException {
         createFileIfMissing();
 

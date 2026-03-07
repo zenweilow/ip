@@ -1,6 +1,13 @@
+/**
+ * Handles all interactions with the user including displaying
+ * messages, task lists, and error information.
+ */
 public class Ui {
     private static final String LINE = "____________________________________________________________";
 
+    /**
+     * Displays the greeting message when the chatbot starts.
+     */
     public void showGreeting() {
         printLine();
         System.out.println(" Welcome my GOAT, Hogrider here!");
@@ -8,12 +15,20 @@ public class Ui {
         printLine();
     }
 
+    /**
+     * Displays the farewell message when the chatbot exits.
+     */
     public void showExit() {
         printLine();
         System.out.println(" Bye GOAT!");
         printLine();
     }
 
+    /**
+     * Displays an error message to the user.
+     *
+     * @param message Error message to display.
+     */
     public void showError(String message) {
         printLine();
         System.out.println(" " + message);

@@ -1,8 +1,18 @@
+/**
+ * Parses user input and extracts relevant information such as
+ * command words, task descriptions, and task indexes.
+ */
 public class Parser {
     private static final String DEADLINE_BY = " /by ";
     private static final String EVENT_FROM = " /from ";
     private static final String EVENT_TO = " /to ";
 
+    /**
+     * Returns the command word extracted from the user input.
+     *
+     * @param input Raw user input.
+     * @return Command word entered by the user.
+     */
     public String parseCommandWord(String input) {
         String trimmedInput = input.trim();
 
@@ -14,6 +24,13 @@ public class Parser {
         return parts[0];
     }
 
+    /**
+     * Returns the description of a todo task from the user input.
+     *
+     * @param input User input containing a todo command.
+     * @return Description of the todo task.
+     * @throws HogriderException If the description is empty.
+     */
     public String parseTodo(String input) throws HogriderException {
         String description = input.substring("todo".length()).trim();
 
@@ -24,6 +41,13 @@ public class Parser {
         return description;
     }
 
+    /**
+     * Returns the description and deadline extracted from the user input.
+     *
+     * @param input User input containing a deadline command.
+     * @return Array containing the task description and deadline.
+     * @throws HogriderException If the input format is invalid.
+     */
     public String[] parseDeadline(String input) throws HogriderException {
         String rest = input.substring("deadline".length()).trim();
         int byIndex = rest.indexOf(DEADLINE_BY);
@@ -46,6 +70,14 @@ public class Parser {
         return new String[]{description, by};
     }
 
+    /**
+     * Returns the description, start time, and end time extracted
+     * from the user input.
+     *
+     * @param input User input containing an event command.
+     * @return Array containing the description, start time, and end time.
+     * @throws HogriderException If the input format is invalid.
+     */
     public String[] parseEvent(String input) throws HogriderException {
         String rest = input.substring("event".length()).trim();
         int fromIndex = rest.indexOf(EVENT_FROM);
@@ -92,6 +124,13 @@ public class Parser {
         return zeroBased;
     }
 
+    /**
+     * Returns the keyword used to search tasks.
+     *
+     * @param input User input containing the find command.
+     * @return Keyword used to match task descriptions.
+     * @throws HogriderException If the keyword is empty.
+     */
     public String parseFind(String input) throws HogriderException {
         String keyword = input.substring("find".length()).trim();
 

@@ -1,5 +1,10 @@
 import java.util.Scanner;
 
+/**
+ * Represents the main entry point of the Hogrider chatbot.
+ * Coordinates user interaction, command parsing, task management,
+ * and storage of tasks.
+ */
 public class Hogrider {
 
     private static final String FILE_PATH = "data/hogrider.txt";
@@ -19,6 +24,12 @@ public class Hogrider {
     private static final String CMD_DELETE = "delete";
     private static final String CMD_FIND = "find";
 
+    /**
+     * Creates a new Hogrider chatbot using the specified file path
+     * to load and save tasks.
+     *
+     * @param filePath Path of the storage file used to persist tasks.
+     */
     public Hogrider(String filePath) {
         ui = new Ui();
         parser = new Parser();
@@ -39,6 +50,10 @@ public class Hogrider {
         new Hogrider(FILE_PATH).run();
     }
 
+    /**
+     * Starts the chatbot and continuously processes user commands
+     * until the user exits the program.
+     */
     public void run() {
         Scanner scanner = new Scanner(System.in);
         ui.showGreeting();
@@ -59,6 +74,13 @@ public class Hogrider {
         scanner.close();
     }
 
+    /**
+     * Processes a user command and executes the corresponding action.
+     *
+     * @param input Command entered by the user.
+     * @return True if the program should continue running.
+     * @throws HogriderException If the command is invalid.
+     */
     private boolean handleCommand(String input) throws HogriderException {
         String commandWord = parser.parseCommandWord(input);
 
