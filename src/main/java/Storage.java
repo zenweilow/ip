@@ -6,14 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Storage {
-    private static final String DATA_FOLDER = "data";
-    private static final String DATA_FILE = "hogrider.txt";
     private static final String SEPARATOR = " \\| ";
-
     private final Path filePath;
 
-    public Storage() {
-        this.filePath = Paths.get(DATA_FOLDER, DATA_FILE);
+    public Storage(String filePath) {
+        this.filePath = Paths.get(filePath);
     }
 
     public ArrayList<Task> load() throws HogriderException {
@@ -52,9 +49,10 @@ public class Storage {
 
     private void createFileIfMissing() throws HogriderException {
         try {
-            Path folderPath = Paths.get(DATA_FOLDER);
-            if (!Files.exists(folderPath)) {
-                Files.createDirectories(folderPath);
+            Path parent = filePath.getParent();
+
+            if (parent != null && !Files.exists(parent)) {
+                Files.createDirectories(parent);
             }
 
             if (!Files.exists(filePath)) {
