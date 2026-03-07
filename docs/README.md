@@ -13,10 +13,13 @@ Users interact with Hogrider by typing commands in the terminal. Hogrider automa
 1. Download the `.jar` file from the GitHub release.
 2. Place the `.jar` file in an empty folder.
 3. Open a terminal in that folder.
-4. Run the program: java -jar Hogrider.jar
+4. Run the program: `java -jar Hogrider.jar`
 
-You should see a greeting message from Hogrider.
-
+You should see a greeting message from Hogrider:
+```
+Welcome my GOAT, Hogrider here!
+u need help ah?
+```
 ---
 
 # Features
