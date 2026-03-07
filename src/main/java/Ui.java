@@ -65,6 +65,21 @@ public class Ui {
         printLine();
     }
 
+    public void showMatchingTasks(TaskList tasks) {
+        printLine();
+
+        if (tasks.isEmpty()) {
+            System.out.println(" no matching tasks found leh");
+        } else {
+            System.out.println(" Here are the matching tasks in your list:");
+            for (int i = 0; i < tasks.size(); i++) {
+                System.out.println(" " + (i + 1) + "." + tasks.getTask(i));
+            }
+        }
+
+        printLine();
+    }
+
     private void printLine() {
         System.out.println(LINE);
     }

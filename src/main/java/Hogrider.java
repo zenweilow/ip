@@ -17,6 +17,7 @@ public class Hogrider {
     private static final String CMD_DEADLINE = "deadline";
     private static final String CMD_EVENT = "event";
     private static final String CMD_DELETE = "delete";
+    private static final String CMD_FIND = "find";
 
     public Hogrider(String filePath) {
         ui = new Ui();
@@ -94,6 +95,10 @@ public class Hogrider {
             addEvent(input);
             return true;
 
+        case CMD_FIND:
+            findTask(input);
+            return true;
+
         case "":
             throw new HogriderException("you never type anything leh");
 
@@ -150,6 +155,12 @@ public class Hogrider {
         Task removedTask = tasks.deleteTask(index);
         storage.save(tasks.getAllTasks());
         ui.showTaskDeleted(removedTask, tasks.size());
+    }
+
+    private void findTask(String input) throws HogriderException {
+        String keyword = parser.parseFind(input);
+        TaskList matchingTasks = tasks.findTasks(keyword);
+        ui.showMatchingTasks(matchingTasks);
     }
 }
 

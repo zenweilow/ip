@@ -91,4 +91,14 @@ public class Parser {
 
         return zeroBased;
     }
+
+    public String parseFind(String input) throws HogriderException {
+        String keyword = input.substring("find".length()).trim();
+
+        if (keyword.isEmpty()) {
+            throw new HogriderException("find keyword cannot be empty leh. Use: find <keyword>");
+        }
+
+        return keyword;
+    }
 }
